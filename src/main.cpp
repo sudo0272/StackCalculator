@@ -8,20 +8,44 @@
 int main() {
     std::string expression;
     std::vector<ExpressionNode> expressionNodes;
-    unsigned int i = 0;
+    std::vector<ExpressionNode> calculateStack;
+    unsigned int index = 0;
+    int operands[2];
+    int operateResult;
     
     std::getline(std::cin, expression);
 
     expression += ')';
 
     // convert infix expression to postfix expression
-    convertInfixExpressionToPostfixExpression(expressionNodes, expression, &i);
+    convertInfixExpressionToPostfixExpression(expressionNodes, expression, &index);
 
-    for (i = 0; i < expressionNodes.size(); i++) {
-        std::cout << expressionNodes[i].getValue() << ' ';
+    // for (i = 0; i < expressionNodes.size(); i++) {
+    //     std::cout << expressionNodes[i].getValue() << ' ';
+    // }
+
+    // std::cout << std::endl;
+
+    for (auto i = expressionNodes.begin(); i != expressionNodes.end(); i++) {
+        if ((*i).getType() == NUMBER) {
+            calculateStack.push_back(*i);
+        } else if ((*i).getType() == SIGN) {
+            operands[0] = std::stoi(calculateStack.back().getValue());
+            calculateStack.pop_back();
+
+            operands[1] = std::stoi(calculateStack.back().getValue());
+            calculateStack.pop_back();
+
+                 if ((*i).getValue() == "*") operateResult = operands[0] * operands[1];
+            else if ((*i).getValue() == "/") operateResult = operands[0] / operands[1];
+            else if ((*i).getValue() == "+") operateResult = operands[0] + operands[1];
+            else if ((*i).getValue() == "-") operateResult = operands[0] - operands[1];
+
+            calculateStack.push_back(ExpressionNode(std::to_string(operateResult), NUMBER));
+        }
     }
 
-    std::cout << std::endl;
+    std::cout << "= " << calculateStack[0].getValue() << std::endl;
 
     return 0;
 }
