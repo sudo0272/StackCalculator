@@ -30,10 +30,10 @@ int main() {
         if ((*i).getType() == NUMBER) {
             calculateStack.push_back(*i);
         } else if ((*i).getType() == SIGN) {
-            operands[0] = std::stod(calculateStack.back().getValue());
+            operands[1] = std::stod(calculateStack.back().getValue());
             calculateStack.pop_back();
 
-            operands[1] = std::stod(calculateStack.back().getValue());
+            operands[0] = std::stod(calculateStack.back().getValue());
             calculateStack.pop_back();
 
                  if ((*i).getValue() == "*") operateResult = operands[0] * operands[1];
