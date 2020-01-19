@@ -3,4 +3,4 @@
 
 #include <string>
 
-void convertInfixExpressionToPostfixExpression(std::string *result, std::string expression, unsigned int *i)
+void convertInfixExpressionToPostfixExpression(std::string *result, std::string expression, unsigned int *i);
