@@ -5,9 +5,11 @@
 int main() {
     std::string expression;
     std::string result;
-    unsigned int i;
+    unsigned int i = 0;
     
     std::getline(std::cin, expression);
+
+    expression += ')';
 
     // convert infix expression to postfix expression
     convertInfixExpressionToPostfixExpression(&result, expression, &i);

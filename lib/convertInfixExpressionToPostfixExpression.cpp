@@ -10,7 +10,7 @@ void convertInfixExpressionToPostfixExpression(std::string *result, std::string 
 
     while (expression[*i] != ')') {
         switch (expression[*i]) {
-            case 'A' ... 'Z':
+            case '0' ... '9':
                 (*result) += expression[*i];
 
                 break;
