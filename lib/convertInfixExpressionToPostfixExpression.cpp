@@ -1,24 +1,30 @@
 #include <vector>
 #include <string>
 #include "convert_expression.h"
+#include "ExpressionNodeType.h"
+#include "ExpressionNode.h"
 
 /**
  * convert infix-expression to postfix-expression
 */
-void convertInfixExpressionToPostfixExpression(std::string *result, std::string expression, unsigned int *i) {
+void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expressionNodes, std::string expression, unsigned int *i) {
     std::vector<char> signs;
 
     while (expression[*i] != ')') {
         switch (expression[*i]) {
             case '0' ... '9':
-                (*result) += expression[*i];
+                if (*i > 0 && '0' <= expression[*i] && expression[*i] <= '9') {
+                    expressionNodes.back().setValue(expressionNodes.back().getValue() + expression[*i]);
+                } else {
+                    expressionNodes.push_back(ExpressionNode(std::string(1, expression[*i]), NUMBER));
+                }
 
                 break;
             
             case '*':
             case '/':
                 while (!signs.empty() && (signs.back() == '*' || signs.back() == '/')) {
-                    (*result) += signs.back();
+                    expressionNodes.push_back(ExpressionNode(std::string(1, signs.back()), SIGN));
 
                     signs.pop_back();
                 }
@@ -30,7 +36,7 @@ void convertInfixExpressionToPostfixExpression(std::string *result, std::string 
             case '+':
             case '-':
                 while (!signs.empty() && (signs.back() == '+' || signs.back() == '-' || signs.back() == '*' || signs.back() == '/')) {
-                    (*result) += signs.back();
+                    expressionNodes.push_back(ExpressionNode(std::string(1, signs.back()), SIGN));
 
                     signs.pop_back();
                 }
@@ -42,7 +48,7 @@ void convertInfixExpressionToPostfixExpression(std::string *result, std::string 
             case '(':
                 (*i)++;
 
-                convertInfixExpressionToPostfixExpression(result, expression, i);
+                convertInfixExpressionToPostfixExpression(expressionNodes, expression, i);
                 
                 break;
 
@@ -54,7 +60,7 @@ void convertInfixExpressionToPostfixExpression(std::string *result, std::string 
     }
 
     while (!signs.empty()) {
-        (*result) += signs.back();
+        expressionNodes.push_back(ExpressionNode(std::string(1, signs.back()), SIGN));
         
         signs.pop_back();
     }
