@@ -25,7 +25,8 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
             
             case '*':
             case '/':
-                while (!signs.empty() && (signs.back() == '*' || signs.back() == '/')) {
+            case '%':
+                while (!signs.empty() && (signs.back() == '*' || signs.back() == '/' || signs.back() == '%')) {
                     expressionNodes.push_back(ExpressionNode(std::string(1, signs.back()), SIGN));
 
                     signs.pop_back();
@@ -37,7 +38,7 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
             
             case '+':
             case '-':
-                while (!signs.empty() && (signs.back() == '+' || signs.back() == '-' || signs.back() == '*' || signs.back() == '/')) {
+                while (!signs.empty()) {
                     expressionNodes.push_back(ExpressionNode(std::string(1, signs.back()), SIGN));
 
                     signs.pop_back();

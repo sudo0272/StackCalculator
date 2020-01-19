@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cmath>
 #include "../lib/convert_expression.h"
 #include "../lib/ExpressionNodeType.h"
 #include "../lib/ExpressionNode.h"
@@ -38,6 +39,7 @@ int main() {
 
                  if ((*i).getValue() == "*") operateResult = operands[0] * operands[1];
             else if ((*i).getValue() == "/") operateResult = operands[0] / operands[1];
+            else if ((*i).getValue() == "%") operateResult = std::fmod(operands[0], operands[1]);
             else if ((*i).getValue() == "+") operateResult = operands[0] + operands[1];
             else if ((*i).getValue() == "-") operateResult = operands[0] - operands[1];
 
