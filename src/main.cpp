@@ -10,8 +10,8 @@ int main() {
     std::vector<ExpressionNode> expressionNodes;
     std::vector<ExpressionNode> calculateStack;
     unsigned int index = 0;
-    int operands[2];
-    int operateResult;
+    double operands[2];
+    double operateResult;
     
     std::getline(std::cin, expression);
 
@@ -30,10 +30,10 @@ int main() {
         if ((*i).getType() == NUMBER) {
             calculateStack.push_back(*i);
         } else if ((*i).getType() == SIGN) {
-            operands[0] = std::stoi(calculateStack.back().getValue());
+            operands[0] = std::stod(calculateStack.back().getValue());
             calculateStack.pop_back();
 
-            operands[1] = std::stoi(calculateStack.back().getValue());
+            operands[1] = std::stod(calculateStack.back().getValue());
             calculateStack.pop_back();
 
                  if ((*i).getValue() == "*") operateResult = operands[0] * operands[1];

@@ -13,7 +13,8 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
     while (expression[*i] != ')') {
         switch (expression[*i]) {
             case '0' ... '9':
-                if (*i > 0 && '0' <= expression[(*i) - 1] && expression[(*i) - 1] <= '9') {
+            case '.':
+                if (*i > 0 && (('0' <= expression[(*i) - 1] && expression[(*i) - 1] <= '9') || expression[(*i) - 1] == '.')) {
                     expressionNodes.back().setValue(expressionNodes.back().getValue() + expression[*i]);
                     expressionNodes.back().setType(NUMBER);
                 } else {
