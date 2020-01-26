@@ -21,16 +21,20 @@ int main() {
     // convert infix expression to postfix expression
     convertInfixExpressionToPostfixExpression(expressionNodes, expression, &index);
 
-    // for (i = 0; i < expressionNodes.size(); i++) {
-    //     std::cout << expressionNodes[i].getValue() << ' ';
-    // }
+    for (int i = 0; i < expressionNodes.size(); i++) {
+        std::cout << expressionNodes[i].getValue() << ' ';
+    }
 
-    // std::cout << std::endl;
+    std::cout << std::endl;
 
     for (auto i = expressionNodes.begin(); i != expressionNodes.end(); i++) {
-        if ((*i).getType() == NUMBER) {
+        switch ((*i).getType()) {
+        case NUMBER:
             calculateStack.push_back(*i);
-        } else if ((*i).getType() == SIGN) {
+            
+            break;
+        
+        case SIGN:
             operands[1] = std::stod(calculateStack.back().getValue());
             calculateStack.pop_back();
 
@@ -44,6 +48,21 @@ int main() {
             else if ((*i).getValue() == "-") operateResult = operands[0] - operands[1];
 
             calculateStack.push_back(ExpressionNode(std::to_string(operateResult), NUMBER));
+
+            break;
+        
+        case FUNCTION:
+            operands[0] = std::stod(calculateStack.back().getValue());
+            calculateStack.pop_back();
+
+            if ((*i).getValue() == "sqrt") {
+                operateResult = sqrt(operands[0]);
+            }
+
+            calculateStack.push_back(ExpressionNode(std::to_string(operateResult), NUMBER));
+
+        default:
+            break;
         }
     }
 

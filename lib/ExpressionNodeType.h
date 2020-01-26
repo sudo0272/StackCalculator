@@ -3,5 +3,6 @@
 
 enum ExpressionNodeType {
     NUMBER,
-    SIGN
+    SIGN,
+    FUNCTION
 };

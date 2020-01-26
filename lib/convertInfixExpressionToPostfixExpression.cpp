@@ -1,5 +1,6 @@
 #include <vector>
 #include <string>
+#include <cctype>
 #include "convert_expression.h"
 #include "ExpressionNodeType.h"
 #include "ExpressionNode.h"
@@ -9,8 +10,9 @@
 */
 void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expressionNodes, std::string expression, unsigned int *i) {
     std::vector<char> signs;
+    std::string functionName;
 
-    while (expression[*i] != ')') {
+    while (*i < expression.size() && expression[*i] != ')') {
         switch (expression[*i]) {
             case '0' ... '9':
             case '.':
@@ -19,6 +21,25 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
                     expressionNodes.back().setType(NUMBER);
                 } else {
                     expressionNodes.push_back(ExpressionNode(std::string(1, expression[*i]), NUMBER));
+                }
+
+                break;
+            
+            case 'a' ... 'z':
+                while (*i < expression.size() && expression[*i] != '(') {
+                    functionName += expression[*i];
+
+                    (*i)++;
+                }
+
+                if (functionName == "sqrt") {
+                    convertInfixExpressionToPostfixExpression(expressionNodes, expression, i);
+
+                    expressionNodes.push_back(ExpressionNode(std::string("sqrt"), FUNCTION));
+                }
+                
+                if (*i <= expression.size()) {
+                    (*i)--;
                 }
 
                 break;
