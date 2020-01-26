@@ -3,6 +3,6 @@
 
 enum ExpressionNodeType {
     NUMBER,
-    SIGN,
-    FUNCTION
+    BINARY_OPERATOR,
+    UNARY_OPERATOR
 };

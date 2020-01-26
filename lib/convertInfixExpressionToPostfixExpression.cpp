@@ -35,7 +35,7 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
                 if (functionName == "sqrt") {
                     convertInfixExpressionToPostfixExpression(expressionNodes, expression, i);
 
-                    expressionNodes.push_back(ExpressionNode(std::string("sqrt"), FUNCTION));
+                    expressionNodes.push_back(ExpressionNode(std::string("sqrt"), UNARY_OPERATOR));
                 }
                 
                 if (*i <= expression.size()) {
@@ -48,7 +48,7 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
             case '/':
             case '%':
                 while (!signs.empty() && (signs.back() == '*' || signs.back() == '/' || signs.back() == '%')) {
-                    expressionNodes.push_back(ExpressionNode(std::string(1, signs.back()), SIGN));
+                    expressionNodes.push_back(ExpressionNode(std::string(1, signs.back()), BINARY_OPERATOR));
 
                     signs.pop_back();
                 }
@@ -60,7 +60,7 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
             case '+':
             case '-':
                 while (!signs.empty()) {
-                    expressionNodes.push_back(ExpressionNode(std::string(1, signs.back()), SIGN));
+                    expressionNodes.push_back(ExpressionNode(std::string(1, signs.back()), BINARY_OPERATOR));
 
                     signs.pop_back();
                 }
@@ -84,7 +84,7 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
     }
 
     while (!signs.empty()) {
-        expressionNodes.push_back(ExpressionNode(std::string(1, signs.back()), SIGN));
+        expressionNodes.push_back(ExpressionNode(std::string(1, signs.back()), BINARY_OPERATOR));
         
         signs.pop_back();
     }

@@ -34,7 +34,7 @@ int main() {
             
             break;
         
-        case SIGN:
+        case BINARY_OPERATOR:
             operands[1] = std::stod(calculateStack.back().getValue());
             calculateStack.pop_back();
 
@@ -51,7 +51,7 @@ int main() {
 
             break;
         
-        case FUNCTION:
+        case UNARY_OPERATOR:
             operands[0] = std::stod(calculateStack.back().getValue());
             calculateStack.pop_back();
 
