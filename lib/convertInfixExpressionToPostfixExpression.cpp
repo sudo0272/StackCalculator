@@ -9,10 +9,14 @@
  * convert infix-expression to postfix-expression
 */
 void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expressionNodes, std::string expression, unsigned int *i) {
-    std::vector<char> signs;
+    std::vector<std::string> signs;
     std::string functionName;
+    std::string operatorSign;
 
     while (*i < expression.size() && expression[*i] != ')') {
+        functionName = "";
+        operatorSign = "";
+
         switch (expression[*i]) {
             case '0' ... '9':
             case '.':
@@ -45,27 +49,47 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
                 break;
             
             case '*':
+                operatorSign = "";
+                while (*i < expression.size() && expression[*i] == '*') {
+                    operatorSign += expression[*i];
+                    (*i)++;
+                }
+
+                (*i)--;
+
+                if (operatorSign == "*") {
+                    while (!signs.empty() && (signs.back() == "*" || signs.back() == "/" || signs.back() == "%" || signs.back() == "**")) {
+                        expressionNodes.push_back(ExpressionNode(signs.back(), BINARY_OPERATOR));
+
+                        signs.pop_back();
+                    }
+                }
+                
+                signs.push_back(operatorSign);
+
+                break;
+
             case '/':
             case '%':
-                while (!signs.empty() && (signs.back() == '*' || signs.back() == '/' || signs.back() == '%')) {
-                    expressionNodes.push_back(ExpressionNode(std::string(1, signs.back()), BINARY_OPERATOR));
+                while (!signs.empty() && (signs.back() == "*" || signs.back() == "/" || signs.back() == "%" || signs.back() == "**")) {
+                    expressionNodes.push_back(ExpressionNode(signs.back(), BINARY_OPERATOR));
 
                     signs.pop_back();
                 }
 
-                signs.push_back(expression[*i]);
+                signs.push_back(std::string(1, expression[*i]));
 
                 break;
             
             case '+':
             case '-':
                 while (!signs.empty()) {
-                    expressionNodes.push_back(ExpressionNode(std::string(1, signs.back()), BINARY_OPERATOR));
+                    expressionNodes.push_back(ExpressionNode(signs.back(), BINARY_OPERATOR));
 
                     signs.pop_back();
                 }
 
-                signs.push_back(expression[*i]);
+                signs.push_back(std::string(1, expression[*i]));
 
                 break;
             
@@ -84,7 +108,7 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
     }
 
     while (!signs.empty()) {
-        expressionNodes.push_back(ExpressionNode(std::string(1, signs.back()), BINARY_OPERATOR));
+        expressionNodes.push_back(ExpressionNode(signs.back(), BINARY_OPERATOR));
         
         signs.pop_back();
     }
