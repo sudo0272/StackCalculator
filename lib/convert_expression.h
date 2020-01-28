@@ -6,4 +6,4 @@
 #include "ExpressionNodeType.h"
 #include "ExpressionNode.h"
 
-void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &, std::string, unsigned int *);
+void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &, std::string *, unsigned int *);

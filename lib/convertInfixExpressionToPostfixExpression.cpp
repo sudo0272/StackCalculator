@@ -8,19 +8,19 @@
 /**
  * convert infix-expression to postfix-expression
 */
-void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expressionNodes, std::string expression, unsigned int *i) {
+void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expressionNodes, std::string *expression, unsigned int *i) {
     std::vector<std::string> signs;
     std::string currentString;
     enum ExpressionNodeType lastestStackedElementType;
 
-    while (*i < expression.size() && expression[*i] != ')') {
+    while (*i < expression->size() && (*expression)[*i] != ')') {
         currentString = "";
 
-        switch (expression[*i]) {
+        switch ((*expression)[*i]) {
             case '0' ... '9':
             case '.':
-                while (*i < expression.size() && (isdigit(expression[*i]) || expression[*i] == '.')) {
-                    currentString += expression[*i];
+                while (*i < expression->size() && (isdigit((*expression)[*i]) || (*expression)[*i] == '.')) {
+                    currentString += (*expression)[*i];
 
                     (*i)++;
                 }
@@ -34,8 +34,8 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
                 break;
             
             case 'a' ... 'z':
-                while (*i < expression.size() && expression[*i] != '(') {
-                    currentString += expression[*i];
+                while (*i < expression->size() && (*expression)[*i] != '(') {
+                    currentString += (*expression)[*i];
 
                     (*i)++;
                 }
@@ -46,7 +46,7 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
                     expressionNodes.push_back(ExpressionNode(std::string("sqrt"), UNARY_OPERATOR));
                 }
                 
-                if (*i <= expression.size()) {
+                if (*i <= expression->size()) {
                     (*i)--;
                 }
 
@@ -55,8 +55,8 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
                 break;
             
             case '*':
-                while (*i < expression.size() && expression[*i] == '*') {
-                    currentString += expression[*i];
+                while (*i < expression->size() && (*expression)[*i] == '*') {
+                    currentString += (*expression)[*i];
                     (*i)++;
                 }
 
@@ -84,7 +84,7 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
                     signs.pop_back();
                 }
 
-                signs.push_back(std::string(1, expression[*i]));
+                signs.push_back(std::string(1, (*expression)[*i]));
 
                 lastestStackedElementType = BINARY_OPERATOR;
 
@@ -99,7 +99,7 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
 
                 lastestStackedElementType = BINARY_OPERATOR;
 
-                signs.push_back(std::string(1, expression[*i]));
+                signs.push_back(std::string(1, (*expression)[*i]));
 
                 break;
 
@@ -109,8 +109,8 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
 
                     (*i)++;
 
-                    while (*i < expression.size() && (isdigit(expression[*i]) || expression[*i] == '.')) {
-                        currentString += expression[*i];
+                    while (*i < expression->size() && (isdigit((*expression)[*i]) || (*expression)[*i] == '.')) {
+                        currentString += (*expression)[*i];
 
                         (*i)++;
                     }
@@ -129,7 +129,7 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
 
                     lastestStackedElementType = BINARY_OPERATOR;
 
-                    signs.push_back(std::string(1, expression[*i]));
+                    signs.push_back(std::string(1, (*expression)[*i]));
                 }
 
                 break;

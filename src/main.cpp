@@ -19,7 +19,7 @@ int main() {
     expression += ')';
 
     // convert infix expression to postfix expression
-    convertInfixExpressionToPostfixExpression(expressionNodes, expression, &index);
+    convertInfixExpressionToPostfixExpression(expressionNodes, &expression, &index);
 
     for (int i = 0; i < expressionNodes.size(); i++) {
         std::cout << expressionNodes[i].getValue() << ' ';
