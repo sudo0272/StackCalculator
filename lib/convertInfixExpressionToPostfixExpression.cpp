@@ -11,7 +11,7 @@
 void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expressionNodes, std::string *expression, unsigned int *i) {
     std::vector<std::string> signs;
     std::string currentString;
-    enum ExpressionNodeType lastestStackedElementType;
+    enum ExpressionNodeType lastestStackedElementType = BEGINNING;
 
     while (*i < expression->size() && (*expression)[*i] != ')') {
         currentString = "";
@@ -104,7 +104,7 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
                 break;
 
             case '-':
-                if (lastestStackedElementType != NUMBER) {
+                if (lastestStackedElementType != NUMBER || lastestStackedElementType == BEGINNING) {
                     currentString = "-";
 
                     (*i)++;
