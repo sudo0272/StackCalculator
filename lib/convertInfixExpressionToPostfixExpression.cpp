@@ -10,33 +10,34 @@
 */
 void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expressionNodes, std::string expression, unsigned int *i) {
     std::vector<std::string> signs;
-    std::string functionName;
-    std::string operatorSign;
+    std::string currentString;
 
     while (*i < expression.size() && expression[*i] != ')') {
-        functionName = "";
-        operatorSign = "";
+        currentString = "";
 
         switch (expression[*i]) {
             case '0' ... '9':
             case '.':
-                if (*i > 0 && (('0' <= expression[(*i) - 1] && expression[(*i) - 1] <= '9') || expression[(*i) - 1] == '.')) {
-                    expressionNodes.back().setValue(expressionNodes.back().getValue() + expression[*i]);
-                    expressionNodes.back().setType(NUMBER);
-                } else {
-                    expressionNodes.push_back(ExpressionNode(std::string(1, expression[*i]), NUMBER));
+                while (*i < expression.size() && (isdigit(expression[*i]) || expression[*i] == '.')) {
+                    currentString += expression[*i];
+
+                    (*i)++;
                 }
+
+                (*i)--;
+
+                expressionNodes.push_back(ExpressionNode(currentString, NUMBER));
 
                 break;
             
             case 'a' ... 'z':
                 while (*i < expression.size() && expression[*i] != '(') {
-                    functionName += expression[*i];
+                    currentString += expression[*i];
 
                     (*i)++;
                 }
 
-                if (functionName == "sqrt") {
+                if (currentString == "sqrt") {
                     convertInfixExpressionToPostfixExpression(expressionNodes, expression, i);
 
                     expressionNodes.push_back(ExpressionNode(std::string("sqrt"), UNARY_OPERATOR));
@@ -49,15 +50,14 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
                 break;
             
             case '*':
-                operatorSign = "";
                 while (*i < expression.size() && expression[*i] == '*') {
-                    operatorSign += expression[*i];
+                    currentString += expression[*i];
                     (*i)++;
                 }
 
                 (*i)--;
 
-                if (operatorSign == "*") {
+                if (currentString == "*") {
                     while (!signs.empty() && (signs.back() == "*" || signs.back() == "/" || signs.back() == "%" || signs.back() == "**")) {
                         expressionNodes.push_back(ExpressionNode(signs.back(), BINARY_OPERATOR));
 
@@ -65,7 +65,7 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
                     }
                 }
                 
-                signs.push_back(operatorSign);
+                signs.push_back(currentString);
 
                 break;
 
