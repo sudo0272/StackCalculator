@@ -4,5 +4,6 @@
 enum ExpressionNodeType {
     NUMBER,
     BINARY_OPERATOR,
-    UNARY_OPERATOR
+    UNARY_OPERATOR,
+    FUNCTION
 };
