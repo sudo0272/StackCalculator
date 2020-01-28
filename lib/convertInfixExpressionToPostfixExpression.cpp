@@ -11,6 +11,7 @@
 void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expressionNodes, std::string expression, unsigned int *i) {
     std::vector<std::string> signs;
     std::string currentString;
+    enum ExpressionNodeType lastestStackedElementType;
 
     while (*i < expression.size() && expression[*i] != ')') {
         currentString = "";
@@ -27,6 +28,8 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
                 (*i)--;
 
                 expressionNodes.push_back(ExpressionNode(currentString, NUMBER));
+
+                lastestStackedElementType = NUMBER;
 
                 break;
             
@@ -46,6 +49,8 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
                 if (*i <= expression.size()) {
                     (*i)--;
                 }
+
+                lastestStackedElementType = FUNCTION;
 
                 break;
             
@@ -67,6 +72,8 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
                 
                 signs.push_back(currentString);
 
+                lastestStackedElementType = BINARY_OPERATOR;
+
                 break;
 
             case '/':
@@ -79,17 +86,51 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
 
                 signs.push_back(std::string(1, expression[*i]));
 
+                lastestStackedElementType = BINARY_OPERATOR;
+
                 break;
             
             case '+':
-            case '-':
                 while (!signs.empty()) {
                     expressionNodes.push_back(ExpressionNode(signs.back(), BINARY_OPERATOR));
 
                     signs.pop_back();
                 }
 
+                lastestStackedElementType = BINARY_OPERATOR;
+
                 signs.push_back(std::string(1, expression[*i]));
+
+                break;
+
+            case '-':
+                if (lastestStackedElementType != NUMBER) {
+                    currentString = "-";
+
+                    (*i)++;
+
+                    while (*i < expression.size() && (isdigit(expression[*i]) || expression[*i] == '.')) {
+                        currentString += expression[*i];
+
+                        (*i)++;
+                    }
+
+                    (*i)--;
+                    
+                    lastestStackedElementType = NUMBER;
+
+                    expressionNodes.push_back(ExpressionNode(currentString, NUMBER));
+                } else {
+                    while (!signs.empty()) {
+                        expressionNodes.push_back(ExpressionNode(signs.back(), BINARY_OPERATOR));
+
+                        signs.pop_back();
+                    }
+
+                    lastestStackedElementType = BINARY_OPERATOR;
+
+                    signs.push_back(std::string(1, expression[*i]));
+                }
 
                 break;
             
