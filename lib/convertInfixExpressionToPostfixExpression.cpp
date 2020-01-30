@@ -4,6 +4,7 @@
 #include "convert_expression.h"
 #include "ExpressionNodeType.h"
 #include "ExpressionNode.h"
+#include "Exceptions.h"
 
 /**
  * convert infix-expression to postfix-expression
@@ -146,6 +147,10 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
         }
 
         (*i)++;
+    }
+
+    if (*i == expression->size() && (*expression)[*i] != ')') { // if upper while loop hasn't been finished beause the bracket has matched
+        throw Exceptions::Parsing::BracketNotMatchError();
     }
 
     while (!signs.empty()) {

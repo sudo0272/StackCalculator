@@ -20,7 +20,14 @@ int main() {
     expression += ')';
 
     // convert infix expression to postfix expression
-    convertInfixExpressionToPostfixExpression(expressionNodes, &expression, &index);
+    try {
+        convertInfixExpressionToPostfixExpression(expressionNodes, &expression, &index);
+    } catch (Exceptions::Parsing::BracketNotMatchError &e) {
+        std::cerr << e.what() << std::endl;
+
+        return ENOEXEC;
+    }
+    
 
     for (int i = 0; i < expressionNodes.size(); i++) {
         std::cout << expressionNodes[i].getValue() << ' ';
