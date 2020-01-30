@@ -55,6 +55,7 @@ int main() {
             else if ((*i).getValue() == "+") operateResult = operands[0] + operands[1];
             else if ((*i).getValue() == "-") operateResult = operands[0] - operands[1];
             else if ((*i).getValue() == "**") operateResult = pow(operands[0], operands[1]);
+            else if ((*i).getValue() == "//") operateResult = floor(operands[0] / operands[1]);
 
             calculateStack.push_back(ExpressionNode(std::to_string(operateResult), NUMBER));
 

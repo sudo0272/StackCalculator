@@ -64,7 +64,7 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
                 (*i)--;
 
                 if (currentString == "*") {
-                    while (!signs.empty() && (signs.back() == "*" || signs.back() == "/" || signs.back() == "%" || signs.back() == "**")) {
+                    while (!signs.empty() && (signs.back() == "*" || signs.back() == "/" || signs.back() == "%" || signs.back() == "**" || signs.back() == "//")) {
                         expressionNodes.push_back(ExpressionNode(signs.back(), BINARY_OPERATOR));
 
                         signs.pop_back();
@@ -78,8 +78,29 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
                 break;
 
             case '/':
+                while (*i < expression->size() && (*expression)[*i] == '/') {
+                    currentString += (*expression)[*i];
+                    (*i)++;
+                }
+
+                (*i)--;
+
+                if (currentString == "*") {
+                    while (!signs.empty() && (signs.back() == "*" || signs.back() == "/" || signs.back() == "%" || signs.back() == "**" || signs.back() == "//")) {
+                        expressionNodes.push_back(ExpressionNode(signs.back(), BINARY_OPERATOR));
+
+                        signs.pop_back();
+                    }
+                }
+                
+                signs.push_back(currentString);
+
+                lastestStackedElementType = BINARY_OPERATOR;
+
+                break;
+                
             case '%':
-                while (!signs.empty() && (signs.back() == "*" || signs.back() == "/" || signs.back() == "%" || signs.back() == "**")) {
+                while (!signs.empty() && (signs.back() == "*" || signs.back() == "/" || signs.back() == "%" || signs.back() == "**" || signs.back() == "//")) {
                     expressionNodes.push_back(ExpressionNode(signs.back(), BINARY_OPERATOR));
 
                     signs.pop_back();
