@@ -26,6 +26,10 @@ int main() {
         std::cerr << e.what() << std::endl;
 
         return ENOEXEC;
+    } catch (Exceptions::Parsing::UnknownOperatorError &e) {
+        std::cerr << e.what() << std::endl;
+
+        return ENOEXEC;
     }
     
 

@@ -98,7 +98,7 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
                 lastestStackedElementType = BINARY_OPERATOR;
 
                 break;
-                
+
             case '%':
                 while (!signs.empty() && (signs.back() == "*" || signs.back() == "/" || signs.back() == "%" || signs.back() == "**" || signs.back() == "//")) {
                     expressionNodes.push_back(ExpressionNode(signs.back(), BINARY_OPERATOR));
@@ -164,6 +164,10 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
                 break;
 
             default:
+                if ((*expression)[*i] != ' ') {
+                    throw Exceptions::Parsing::UnknownOperatorError(std::string(1, (*expression)[*i]));
+                }
+                
                 break;
         }
 
