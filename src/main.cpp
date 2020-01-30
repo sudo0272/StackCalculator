@@ -5,6 +5,7 @@
 #include "../lib/convert_expression.h"
 #include "../lib/ExpressionNodeType.h"
 #include "../lib/ExpressionNode.h"
+#include "../lib/Exceptions.h"
 
 int main() {
     std::string expression;
@@ -57,7 +58,17 @@ int main() {
             calculateStack.pop_back();
 
             if ((*i).getValue() == "sqrt") {
-                operateResult = sqrt(operands[0]);
+                if (operands[0] >= 0) { // if operand is positive number
+                    operateResult = sqrt(operands[0]);
+                } else {
+                    try {
+                        throw Exceptions::Calculating::ComplexError();
+                    } catch(Exceptions::Calculating::ComplexError &e) {
+                        std::cerr << e.what() << std::endl;
+
+                        return ERANGE;
+                    }
+                }
             }
 
             calculateStack.push_back(ExpressionNode(std::to_string(operateResult), NUMBER));
