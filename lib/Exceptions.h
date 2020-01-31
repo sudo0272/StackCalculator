@@ -9,7 +9,12 @@ class Exceptions:public std::exception {
     public:
         class Parsing {
             public:
-                class BracketNotMatchError { public: const char *what() const throw() { return "Bracket is not matched"; } };
+                class BracketNotMatchError {
+                    public:
+                        const char *what() const throw() {
+                            return "Bracket is not matched";
+                        }
+                };
 
                 class UnknownOperatorError {
                     private:
@@ -32,6 +37,11 @@ class Exceptions:public std::exception {
 
         class Calculating {
             public:
-                class ComplexError { public: const char *what() const throw() { return "Complex is not supported"; } };
+                class ComplexError {
+                    public:
+                        const char *what() const throw() {
+                            return "Complex is not supported";
+                        }
+                };
         };
 };
