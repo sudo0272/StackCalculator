@@ -48,7 +48,7 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
                 if (currentString == "sqrt") {
                     convertInfixExpressionToPostfixExpression(expressionNodes, expression, i);
 
-                    expressionNodes.push_back(ExpressionNode(std::string("sqrt"), UNARY_OPERATOR));
+                    expressionNodes.push_back(ExpressionNode(std::string("sqrt"), FUNCTION));
                 }
                 
                 if (*i <= expression->size()) {
