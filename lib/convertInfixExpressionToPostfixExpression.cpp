@@ -39,7 +39,6 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
             case 'A' ... 'Z':
             case 'a' ... 'z':
                 // TODO: distinguish functions and variables
-                // TODO: throw Exceptions::Parsing::BracketNotMatchError
                 while (*i < expression->size() && isalpha((*expression)[*i])) {
                     currentString += (*expression)[*i];
 
