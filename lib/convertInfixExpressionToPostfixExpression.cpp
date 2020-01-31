@@ -13,17 +13,26 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
     std::vector<std::string> signs;
     std::string currentString;
     enum ExpressionNodeType lastestStackedElementType = BEGINNING;
+    bool hasDecimalPoint;
 
     while (*i < expression->size() && (*expression)[*i] != ')') {
         currentString = "";
+        hasDecimalPoint = false;
 
         // TODO: throw exception when operator or number appears twice
         switch ((*expression)[*i]) {
             case '0' ... '9':
             case '.':
-                // TODO: throw exception when number is not matched with floating number's format
                 while (*i < expression->size() && (isdigit((*expression)[*i]) || (*expression)[*i] == '.')) {
                     currentString += (*expression)[*i];
+
+                    if ((*expression)[*i] == '.') {
+                        if (hasDecimalPoint) {
+                            throw Exceptions::Parsing::AbnormalFloatingNumberFormatError();
+                        } else {
+                            hasDecimalPoint = true;
+                        }
+                    }
 
                     (*i)++;
                 }

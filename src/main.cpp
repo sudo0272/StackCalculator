@@ -34,6 +34,10 @@ int main() {
         std::cerr << e.what() << std::endl;
 
         return ENOEXEC;
+    } catch (Exceptions::Parsing::AbnormalFloatingNumberFormatError &e) {
+        std::cerr << e.what() << std::endl;
+
+        return ENOEXEC;
     }
     
 

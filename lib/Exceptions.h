@@ -51,6 +51,13 @@ class Exceptions:public std::exception {
                             return errorMessage.str();
                         }
                 };
+
+                class AbnormalFloatingNumberFormatError {
+                    public:
+                        const std::string what() const throw() {
+                            return "The format of floating number is abnormal";
+                        }
+                };
         };
 
         class Calculating {
