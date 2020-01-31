@@ -11,7 +11,7 @@ class Exceptions:public std::exception {
             public:
                 class BracketNotMatchError {
                     public:
-                        const char *what() const throw() {
+                        const std::string what() const throw() {
                             return "Bracket is not matched";
                         }
                 };
@@ -25,7 +25,7 @@ class Exceptions:public std::exception {
                             this->operatorSign = operatorSign;
                         }
 
-                        std::string what() const throw() {
+                        const std::string what() const throw() {
                             std::stringstream errorMessage;
 
                             errorMessage << "Operator " << this->operatorSign << " is unknown";
@@ -43,7 +43,7 @@ class Exceptions:public std::exception {
                             this->functionName = functionName;
                         }
 
-                        std::string what() const throw() {
+                        const std::string what() const throw() {
                             std::stringstream errorMessage;
 
                             errorMessage << "Function " << this->functionName << " is unknown";
@@ -57,7 +57,7 @@ class Exceptions:public std::exception {
             public:
                 class ComplexError {
                     public:
-                        const char *what() const throw() {
+                        const std::string what() const throw() {
                             return "Complex is not supported";
                         }
                 };
