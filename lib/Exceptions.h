@@ -33,6 +33,24 @@ class Exceptions:public std::exception {
                             return errorMessage.str();
                         }
                 };
+
+                class UnknownFunctionError {
+                    private:
+                        std::string functionName;
+
+                    public:
+                        UnknownFunctionError(std::string functionName) {
+                            this->functionName = functionName;
+                        }
+
+                        std::string what() const throw() {
+                            std::stringstream errorMessage;
+
+                            errorMessage << "Function " << this->functionName << " is unknown";
+
+                            return errorMessage.str();
+                        }
+                };
         };
 
         class Calculating {

@@ -30,6 +30,10 @@ int main() {
         std::cerr << e.what() << std::endl;
 
         return ENOEXEC;
+    } catch (Exceptions::Parsing::UnknownFunctionError &e) {
+        std::cerr << e.what() << std::endl;
+
+        return ENOEXEC;
     }
     
 
