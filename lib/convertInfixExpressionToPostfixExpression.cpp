@@ -17,9 +17,11 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
     while (*i < expression->size() && (*expression)[*i] != ')') {
         currentString = "";
 
+        // TODO: throw exception when operator or number appears twice
         switch ((*expression)[*i]) {
             case '0' ... '9':
             case '.':
+                // TODO: throw exception when number is not matched with floating number's format
                 while (*i < expression->size() && (isdigit((*expression)[*i]) || (*expression)[*i] == '.')) {
                     currentString += (*expression)[*i];
 
@@ -35,6 +37,8 @@ void convertInfixExpressionToPostfixExpression(std::vector<ExpressionNode> &expr
                 break;
             
             case 'a' ... 'z':
+                // TODO: distinguish functions and variables
+                // TODO: throw Exceptions::Parsing::BracketNotMatchError
                 while (*i < expression->size() && (*expression)[*i] != '(') {
                     currentString += (*expression)[*i];
 
