@@ -75,6 +75,15 @@ int main() {
             else if ((*i).getValue() == "-") operateResult = operands[0] - operands[1];
             else if ((*i).getValue() == "**") operateResult = pow(operands[0], operands[1]);
             else if ((*i).getValue() == "//") operateResult = floor(operands[0] / operands[1]);
+            else {
+                try {
+                    throw Exceptions::Parsing::UnknownOperatorError((*i).getValue());
+                } catch (Exceptions::Parsing::UnknownOperatorError &e) {
+                    std::cerr << e.what() << std::endl;
+
+                    return ENOEXEC;
+                }
+            }
 
             calculateStack.push_back(ExpressionNode(std::to_string(operateResult), NUMBER));
 
