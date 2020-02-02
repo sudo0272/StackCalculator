@@ -58,6 +58,20 @@ class Exceptions:public std::exception {
                             return "The format of floating number is abnormal";
                         }
                 };
+
+                class NoOperatorError {
+                    public:
+                        const std::string what() const throw() {
+                            return "No operator found";
+                        }
+                };
+
+                class NoOperandError {
+                    public:
+                        const std::string what() const throw() {
+                            return "No operand found";
+                        }
+                };
         };
 
         class Calculating {

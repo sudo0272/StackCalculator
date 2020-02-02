@@ -38,8 +38,15 @@ int main() {
         std::cerr << e.what() << std::endl;
 
         return ENOEXEC;
+    } catch (Exceptions::Parsing::NoOperatorError &e) {
+        std::cerr << e.what() << std::endl;
+
+        return ENOEXEC;
+    } catch (Exceptions::Parsing::NoOperandError &e) {
+        std::cerr << e.what() << std::endl;
+
+        return ENOEXEC;
     }
-    
 
     for (int i = 0; i < expressionNodes.size(); i++) {
         std::cout << expressionNodes[i].getValue() << ' ';
