@@ -82,5 +82,12 @@ class Exceptions:public std::exception {
                             return "Complex is not supported";
                         }
                 };
+
+                class NoOperandError {
+                    public:
+                        const std::string what() const throw() {
+                            return "No operand found in stack";
+                        }
+                };
         };
 };

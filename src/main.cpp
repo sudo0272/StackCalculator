@@ -62,6 +62,16 @@ int main() {
             break;
         
         case BINARY_OPERATOR:
+            if (calculateStack.size() < 2) {
+                try {
+                    throw Exceptions::Runtime::NoOperandError();
+                } catch (Exceptions::Runtime::NoOperandError &e) {
+                    std::cerr << e.what() << std::endl;
+
+                    return ENOSPC;
+                }
+            }
+
             operands[1] = std::stod(calculateStack.back().getValue());
             calculateStack.pop_back();
 
@@ -90,6 +100,16 @@ int main() {
             break;
         
         case UNARY_OPERATOR:
+                if (calculateStack.size() < 1) {
+                    try {
+                        throw Exceptions::Runtime::NoOperandError();
+                    } catch (Exceptions::Runtime::NoOperandError &e) {
+                        std::cerr << e.what() << std::endl;
+
+                        return ENOSPC;
+                    }
+                }
+
             operands[0] = std::stod(calculateStack.back().getValue());
             calculateStack.pop_back();
 
