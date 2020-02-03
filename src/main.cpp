@@ -98,8 +98,8 @@ int main() {
                     operateResult = sqrt(operands[0]);
                 } else {
                     try {
-                        throw Exceptions::Calculating::ComplexError();
-                    } catch(Exceptions::Calculating::ComplexError &e) {
+                        throw Exceptions::Runtime::ComplexError();
+                    } catch(Exceptions::Runtime::ComplexError &e) {
                         std::cerr << e.what() << std::endl;
 
                         return ERANGE;

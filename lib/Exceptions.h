@@ -29,7 +29,7 @@ class Exceptions:public std::exception {
                             std::stringstream errorMessage;
 
                             errorMessage << "Operator " << this->operatorSign << " is unknown";
-                            
+
                             return errorMessage.str();
                         }
                 };
@@ -74,7 +74,7 @@ class Exceptions:public std::exception {
                 };
         };
 
-        class Calculating {
+        class Runtime {
             public:
                 class ComplexError {
                     public:
