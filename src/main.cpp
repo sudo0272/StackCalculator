@@ -99,7 +99,7 @@ int main() {
 
             break;
         
-        case UNARY_OPERATOR:
+        case FUNCTION:
                 if (calculateStack.size() < 1) {
                     try {
                         throw Exceptions::Runtime::NoOperandError();
